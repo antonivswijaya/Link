@@ -5,6 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANTONIVS - Musician | Digital Creator</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- === MAINTENANCE MODE TOGGLE === -->
+    <script>
+        // ⚙️ UBAH NILAI INI UNTUK TOGGLE MAINTENANCE MODE
+        const maintenance = true; // true = maintenance mode, false = website normal
+        
+        if (maintenance) {
+            document.write(`
+                <style>
+                    .container { display: none !important; }
+                    body { overflow: hidden !important; }
+                    html { overflow: hidden !important; }
+                </style>
+            `);
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                document.body.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100vw;
+                        height: 100vh;
+                        z-index: 9999;
+                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 40px 20px;
+                        text-align: center;
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        font-family: 'Inter', sans-serif;
+                    ">
+                        <div style="font-size: 4rem; margin-bottom: 24px; animation: bounce 2s infinite;">🚧</div>
+                        <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -1px;">Under Maintenance</h1>
+                        <p style="font-size: 1.2rem; font-weight: 400; opacity: 0.9; margin-bottom: 32px; max-width: 400px; line-height: 1.5;">Website sedang dalam perbaikan dan akan segera kembali. Terima kasih atas kesabaran Anda.</p>
+                        <div style="font-size: 0.9rem; opacity: 0.7; margin-top: 40px;">
+                            <p>ANTONIVS | Musician & Digital Creator</p>
+                        </div>
+                    </div>
+                    <style>
+                        @keyframes bounce {
+                            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+                            40% { transform: translateY(-10px); }
+                            60% { transform: translateY(-5px); }
+                        }
+                        @media (max-width: 480px) {
+                            h1 { font-size: 2rem !important; }
+                            p { font-size: 1rem !important; }
+                        }
+                    </style>
+                `;
+            });
+        }
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -402,6 +460,7 @@
         }   
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header Section -->
@@ -415,12 +474,12 @@
 
         <!-- Links Section -->
         <div class="links">
-            <!-- <div class="link-button private-lessons">
+            <div class="link-button private-lessons">
                 <svg class="social-icon guitar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                     <path fill="#d16d82" d="M529 71C519.6 61.6 504.4 61.6 495.1 71L447 119C444.6 121.4 442.7 124.3 441.5 127.5L426.1 168.5L348.6 246.1C303.5 216.7 249.3 215.9 217.6 247.7C206.6 258.7 199.6 272.3 196.2 287.3C192.5 303.9 177.1 318 160.1 318.9C134.5 320.2 110.8 329.6 92.8 347.5C48 392.3 56.4 473.3 111.5 528.4C166.6 583.5 247.6 592 292.4 547.2C310.3 529.3 319.8 505.5 321 479.9C321.9 462.9 336 447.6 352.6 443.8C367.6 440.4 381.2 433.3 392.2 422.4C424 390.6 423.2 336.5 393.8 291.4L471.4 213.8L512.4 198.4C515.6 197.2 518.5 195.3 520.9 192.9L568.9 144.9C578.3 135.5 578.3 120.3 568.9 111L529 71zM272 320C298.5 320 320 341.5 320 368C320 394.5 298.5 416 272 416C245.5 416 224 394.5 224 368C224 341.5 245.5 320 272 320z"/>
                 </svg>
                 <span>See me irl in private lessons !</span>
-            </div> -->
+            </div>
             <a href="https://www.instagram.com/antonivswijaya" class="link-button instagram" target="_blank">
                 <svg class="social-icon instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <path fill="#d16d82" d="M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
@@ -482,24 +541,28 @@
             const bioCard = document.querySelector('.bio');
             const flipInner = document.querySelector('.flip-card-inner');
             
-            bioCard.addEventListener('click', function() {
-                flipInner.classList.toggle('flipped');
-            });
+            if (bioCard && flipInner) {
+                bioCard.addEventListener('click', function() {
+                    flipInner.classList.toggle('flipped');
+                });
 
-            // Add touch feedback for mobile
-            bioCard.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.98)';
-            });
+                // Add touch feedback for mobile
+                bioCard.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
 
-            bioCard.addEventListener('touchend', function() {
-                this.style.transform = '';
-            });
+                bioCard.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            }
 
             // Toggle brand text click
             const brandText = document.querySelector('.brand-text');
-            brandText.addEventListener('click', function() {
-                this.classList.toggle('clicked');
-            });
+            if (brandText) {
+                brandText.addEventListener('click', function() {
+                    this.classList.toggle('clicked');
+                });
+            }
         });
     </script>
 </body>
