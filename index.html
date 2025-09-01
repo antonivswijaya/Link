@@ -353,6 +353,11 @@
             to { transform: rotate(360deg); }
         }
 
+        @keyframes rotateFromCurrent {
+            from { transform: rotate(var(--start-rotation, 0deg)); }
+            to { transform: rotate(calc(var(--start-rotation, 0deg) + 360deg)); }
+        }
+
         /* Hover/Active effect untuk visual feedback */
         .bio:active {
             transform: scale(0.98);
@@ -553,23 +558,37 @@
     </div>
 
     <script>
-        // Toggle flip effect on click with icon rotation delay
+        // Toggle flip effect on click with icon rotation pause at current position
         document.addEventListener('DOMContentLoaded', function() {
             const bioCard = document.querySelector('.bio');
             const flipInner = document.querySelector('.flip-card-inner');
             const flipIcon = document.querySelector('.flip-icon');
+            let currentRotation = 0;
             
             if (bioCard && flipInner && flipIcon) {
                 bioCard.addEventListener('click', function() {
-                    // Pause icon rotation
-                    flipIcon.classList.add('paused');
+                    // Capture current rotation angle
+                    const computedStyle = window.getComputedStyle(flipIcon);
+                    const transform = computedStyle.getPropertyValue('transform');
+                    
+                    if (transform && transform !== 'none') {
+                        const matrix = new DOMMatrix(transform);
+                        const angle = Math.atan2(matrix.b, matrix.a) * (180 / Math.PI);
+                        currentRotation = angle < 0 ? angle + 360 : angle;
+                    }
+                    
+                    // Stop animation and set to current position
+                    flipIcon.style.animation = 'none';
+                    flipIcon.style.transform = `rotate(${currentRotation}deg)`;
                     
                     // Toggle flip
                     flipInner.classList.toggle('flipped');
                     
-                    // Resume rotation after 800ms delay (same as flip animation duration)
+                    // Resume rotation from current position after flip completes
                     setTimeout(() => {
-                        flipIcon.classList.remove('paused');
+                        // Create new animation starting from current position
+                        flipIcon.style.animation = `rotateFromCurrent 2s linear infinite`;
+                        flipIcon.style.setProperty('--start-rotation', `${currentRotation}deg`);
                     }, 800);
                 });
 
