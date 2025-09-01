@@ -476,6 +476,195 @@
         .link-button.tiktok:hover { 
             border-color: #D16D82; 
             color: #D16D82; 
+        }
+
+        /* Share Button */
+        .share-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(209, 109, 130, 0.25);
+            border-color: #D16D82;
+        }
+
+        /* Share Modal */
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .share-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .share-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            margin: 20px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .share-modal.active .share-modal-content {
+            transform: scale(1);
+        }
+
+        .share-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .share-modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .share-close {
+            width: 32px;
+            height: 32px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .share-close:hover {
+            background: #e5e7eb;
+        }
+
+        .share-profile {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .share-profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .share-profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .share-profile-name {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .copy-link-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: #f8fafc;
+            border: 2px solid #f1f5f9;
+            border-radius: 12px;
+            color: #1a1a1a;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-link-button:hover {
+            border-color: #D16D82;
+            background: #fff;
+        }
+
+        .copy-link-button svg {
+            width: 20px;
+            height: 20px;
+            fill: #D16D82;
+        }
+
+        .copy-feedback {
+            color: #10b981;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+        }
+
+        .share-button svg {
+            width: 20px;
+            height: 20px;
+            fill: #D16D82;
+            transition: transform 0.3s ease;
+        }
+
+        .share-button:hover svg {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 480px) {
+            .share-button {
+                top: 16px;
+                right: 16px;
+                width: 44px;
+                height: 44px;
+            }
+            
+            .share-button svg {
+                width: 18px;
+                height: 18px;
+            }
         }   
     </style>
 
@@ -483,6 +672,46 @@
 </head>
 
 <body>
+    <!-- Share Button -->
+    <div class="share-button" id="shareButton">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+        </svg>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3 class="share-modal-title">Share Profile</h3>
+                <button class="share-close" id="shareClose">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="share-profile">
+                <div class="share-profile-image">
+                    <img src="assets/images/profile-photo.png" alt="Profile Photo">
+                </div>
+                <div class="share-profile-name">@antonivswijaya</div>
+            </div>
+            
+            <button class="copy-link-button" id="copyLinkButton">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                </svg>
+                Copy Link
+            </button>
+            
+            <div class="copy-feedback" id="copyFeedback">
+                Link copied to clipboard!
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Header Section -->
         <div class="header">
@@ -637,6 +866,77 @@
                 brandText.addEventListener('click', function() {
                     this.classList.toggle('clicked');
                 });
+            }
+
+            // Share functionality
+            const shareButton = document.getElementById('shareButton');
+            const shareModal = document.getElementById('shareModal');
+            const shareClose = document.getElementById('shareClose');
+            const copyLinkButton = document.getElementById('copyLinkButton');
+            const copyFeedback = document.getElementById('copyFeedback');
+            
+            if (shareButton && shareModal) {
+                // Open share modal
+                shareButton.addEventListener('click', function() {
+                    shareModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent background scroll
+                });
+
+                // Close share modal
+                function closeShareModal() {
+                    shareModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scroll
+                }
+
+                // Close button
+                if (shareClose) {
+                    shareClose.addEventListener('click', closeShareModal);
+                }
+
+                // Close when clicking backdrop
+                shareModal.addEventListener('click', function(e) {
+                    if (e.target === shareModal) {
+                        closeShareModal();
+                    }
+                });
+
+                // Close with Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && shareModal.classList.contains('active')) {
+                        closeShareModal();
+                    }
+                });
+
+                // Copy link functionality
+                if (copyLinkButton && copyFeedback) {
+                    copyLinkButton.addEventListener('click', async function() {
+                        try {
+                            await navigator.clipboard.writeText(window.location.href);
+                            
+                            // Show feedback
+                            copyFeedback.classList.add('show');
+                            
+                            // Hide feedback after 2 seconds
+                            setTimeout(() => {
+                                copyFeedback.classList.remove('show');
+                            }, 2000);
+                        } catch (err) {
+                            console.log('Error copying to clipboard:', err);
+                            // Fallback for older browsers
+                            const textArea = document.createElement('textarea');
+                            textArea.value = window.location.href;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            
+                            copyFeedback.classList.add('show');
+                            setTimeout(() => {
+                                copyFeedback.classList.remove('show');
+                            }, 2000);
+                        }
+                    });
+                }
             }
         });
     </script>
