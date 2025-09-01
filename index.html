@@ -567,10 +567,10 @@
                     // Toggle flip
                     flipInner.classList.toggle('flipped');
                     
-                    // Resume rotation after 500ms delay
+                    // Resume rotation after 800ms delay (same as flip animation duration)
                     setTimeout(() => {
                         flipIcon.classList.remove('paused');
-                    }, 500);
+                    }, 800);
                 });
 
                 // Add touch feedback for mobile
