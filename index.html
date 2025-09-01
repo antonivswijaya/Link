@@ -261,6 +261,13 @@
             height: 220px;
             perspective: 1000px;
             cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Disabled state for flip card */
+        .bio.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .flip-card-inner.flipped .flip-icon {
@@ -359,7 +366,7 @@
         }
 
         /* Hover/Active effect untuk visual feedback */
-        .bio:active {
+        .bio:active:not(.disabled) {
             transform: scale(0.98);
             transition: transform 0.2s ease;
         }
@@ -558,15 +565,27 @@
     </div>
 
     <script>
-        // Toggle flip effect on click with icon rotation pause at current position
+        // Toggle flip effect on click with icon rotation pause at current position and debounce
         document.addEventListener('DOMContentLoaded', function() {
             const bioCard = document.querySelector('.bio');
             const flipInner = document.querySelector('.flip-card-inner');
             const flipIcon = document.querySelector('.flip-icon');
             let currentRotation = 0;
+            let isDebounced = false; // Flag untuk debounce
+            const DEBOUNCE_DELAY = 800; // 800ms delay
             
             if (bioCard && flipInner && flipIcon) {
-                bioCard.addEventListener('click', function() {
+                bioCard.addEventListener('click', function(e) {
+                    // Jika masih dalam periode debounce, abaikan klik
+                    if (isDebounced) {
+                        e.preventDefault();
+                        return;
+                    }
+                    
+                    // Set debounce flag dan disable interaksi
+                    isDebounced = true;
+                    bioCard.classList.add('disabled');
+                    
                     // Capture current rotation angle
                     const computedStyle = window.getComputedStyle(flipIcon);
                     const transform = computedStyle.getPropertyValue('transform');
@@ -590,15 +609,25 @@
                         flipIcon.style.animation = `rotateFromCurrent 2s linear infinite`;
                         flipIcon.style.setProperty('--start-rotation', `${currentRotation}deg`);
                     }, 800);
+                    
+                    // Reset debounce after delay
+                    setTimeout(() => {
+                        isDebounced = false;
+                        bioCard.classList.remove('disabled');
+                    }, DEBOUNCE_DELAY);
                 });
 
-                // Add touch feedback for mobile
+                // Add touch feedback for mobile (only when not disabled)
                 bioCard.addEventListener('touchstart', function() {
-                    this.style.transform = 'scale(0.98)';
+                    if (!isDebounced) {
+                        this.style.transform = 'scale(0.98)';
+                    }
                 });
 
                 bioCard.addEventListener('touchend', function() {
-                    this.style.transform = '';
+                    if (!isDebounced) {
+                        this.style.transform = '';
+                    }
                 });
             }
 
@@ -612,4 +641,3 @@
         });
     </script>
 </body>
-</html>
