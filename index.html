@@ -743,6 +743,27 @@
                 padding: 0;
             }
         }
+
+        @media (max-width: 768px) {
+        .instagram-embed-container .instagram-media {
+            position: relative;
+        }
+        
+        .instagram-embed-container .instagram-media::after {
+            content: '▶ Tap to view on Instagram';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0.8;
+            }
+        }
     </style>
 
     
