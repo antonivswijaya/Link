@@ -1355,25 +1355,13 @@
             }
         });
 
-        // Auto refresh when page becomes visible again
-        function checkAndRefresh() {
-            if (document.body.innerHTML.trim() === '' || 
-                document.body.children.length === 0 || 
-                !document.querySelector('.container')) {
-                window.location.reload();
-            }
-        }
-
-        // Page visibility change
+        // Langsung refresh setelah delay ketika halaman kembali visible
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden) {
-                setTimeout(checkAndRefresh, 200);
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1000); // Refresh 1 detik setelah kembali ke halaman
             }
-        });
-
-        // Window focus (fallback)
-        window.addEventListener('focus', function() {
-            setTimeout(checkAndRefresh, 200);
         });
     </script>
     <script async src="//www.instagram.com/embed.js"></script>
