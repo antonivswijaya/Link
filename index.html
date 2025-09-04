@@ -1359,8 +1359,13 @@
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden) {
                 setTimeout(function() {
-                    window.location.reload();
-                }, 1000); // Refresh 1 detik setelah kembali ke halaman
+                    // Cek dulu apakah halaman benar-benar blank
+                    if (document.body.innerHTML.trim() === '' || 
+                        !document.querySelector('.container') || 
+                        document.body.children.length === 0) {
+                        window.location.reload();
+                    }
+                }, 500);
             }
         });
     </script>
