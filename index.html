@@ -1316,8 +1316,12 @@
                 });
             }
         });
+
+        // Twitter Share Function - New Tab
         function shareToTwitter() {
-            const url = encodeURIComponent(window.location.href);
+            // Ambil URL tanpa query parameters
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            const url = encodeURIComponent(cleanUrl);
             const text = encodeURIComponent("Hey! Check this out");
             const hashtags = encodeURIComponent("");
             
@@ -1337,11 +1341,10 @@
         // Facebook Share Function - New Tab
         function shareToFacebook() {
             const url = encodeURIComponent(window.location.href);
-            const quote = encodeURIComponent("Hey! Check this out: https://antonivswijaya.com");
-            
-            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`;
-            
+            const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=" + url;
+    
             window.open(facebookUrl, '_blank');
+
         }
 
         // Event listener untuk button Facebook
