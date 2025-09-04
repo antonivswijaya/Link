@@ -1355,19 +1355,24 @@
             }
         });
 
-        // Langsung refresh setelah delay ketika halaman kembali visible
+        // Taruh di DOMContentLoaded
+        let keepAliveInterval;
+
         document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                setTimeout(function() {
-                    // Cek dulu apakah halaman benar-benar blank
-                    if (document.body.innerHTML.trim() === '' || 
-                        !document.querySelector('.container') || 
-                        document.body.children.length === 0) {
-                        window.location.reload();
-                    }
-                }, 500);
+            if (document.hidden) {
+        // Halaman jadi hidden, mulai keep-alive
+                keepAliveInterval = setInterval(() => {
+        // Do minimal activity to prevent suspension
+                    document.title = document.title;
+                }, 1000);
+            } else {
+        // Halaman visible lagi, stop keep-alive
+                if (keepAliveInterval) {
+                    clearInterval(keepAliveInterval);
+                }
             }
         });
+
     </script>
     <script async src="//www.instagram.com/embed.js"></script>
 </body>
