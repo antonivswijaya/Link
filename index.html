@@ -563,12 +563,6 @@
                 border-radius: 50%;
                 opacity: 1;
             }
-            30% {
-                width: 120px;
-                height: 120px;
-                border-radius: 50%;
-                opacity: 0.95;
-            }
             100% {
                 width: 400px;
                 height: 500px;
@@ -593,12 +587,7 @@
                 background: white;
                 border-color: #f1f5f9;
             }
-            70% {
-                width: 120px;
-                height: 120px;
-                border-radius: 50%;
-                opacity: 0.95;
-            }
+            
             100% {
                 width: 80px;
                 height: 80px;
@@ -615,11 +604,6 @@
                     height: 44px;
                     border-radius: 50%;
                 }
-                20% {
-                    width: 56px;
-                    height: 56px;
-                    border-radius: 50%;
-                }
                 100% {
                     width: 90vw;
                     height: 80vh;
@@ -632,11 +616,6 @@
                     width: 90vw;
                     height: 80vh;
                     border-radius: 20px;
-                }
-                80% {
-                    width: 56px;
-                    height: 56px;
-                    border-radius: 50%;
                 }
                 100% {
                     width: 44px;
@@ -1536,121 +1515,114 @@
             const copyFeedback = document.getElementById('copyFeedback');
             // const resetButton = document.getElementById('resetButton');
 
-            // Share button animation
+            // Ganti bagian click handler share button:
             shareButton.addEventListener('click', function() {
                 if (animationInProgress) return;
-                shareButton.className = 'share-button'; // Reset ke class original saja
-                shareButton.removeAttribute('style'); // Hapus semua inline style
+                shareButton.className = 'share-button';
+                shareButton.removeAttribute('style');
                 
-                // Force repaint
                 shareButton.offsetHeight;
                 
-                animationInProgress = true;
-                // ... sisa kode yang sudah ada
                 animationInProgress = true;
 
                 // Show backdrop
                 modalBackdrop.classList.add('show');
 
-                // Get current position of the button
+                // Get current position
                 const rect = shareButton.getBoundingClientRect();
                 const currentTop = rect.top;
                 const currentLeft = rect.left;
 
-                // Switch to fixed positioning at exact current location
+                // Switch to fixed positioning
                 shareButton.classList.add('animating');
                 shareButton.style.top = currentTop + 'px';
                 shareButton.style.left = currentLeft + 'px';
                 shareButton.style.right = 'auto';
 
-                // Force a repaint
                 shareButton.offsetHeight;
 
-                // Start the movement animation
+                // Start movement
                 setTimeout(() => {
                     shareButton.classList.add('moving');
                     shareButton.classList.add('centered');
                 }, 50);
 
-                // Scale up when reaching center
+                // LANGSUNG BLOOMING pas sampai di tengah (hapus scale step)
                 setTimeout(() => {
                     shareButton.classList.remove('moving');
-                }, 850);
-
-                // Start blooming
-                // Jadi lebih cepat dan pastikan hide icon:
-                setTimeout(() => {
                     shareButton.classList.add('blooming');
-                    // Pastikan icon hilang immediately
+                    
+                    // Hide icon immediately
                     const allSvgs = shareButton.querySelectorAll('svg');
                     allSvgs.forEach(svg => {
                         svg.style.opacity = '0';
                         svg.style.visibility = 'hidden';
                         svg.style.display = 'none';
                     });
-                }, 850); // Dipercepat dari 1050ms ke 850ms
-                // Show modal content bersamaan dengan blooming (lebih cepat)
+                }, 850); // Langsung blooming, tanpa jeda
+
+                // Show modal content
                 setTimeout(() => {
                     shareModalContent.classList.add('show');
                     document.body.style.overflow = 'hidden';
-                }, 1200); // Dipercepat dari 1650ms ke 1200ms
+                }, 1200);
             });
 
-           // Close modal function - FIX SEQUENCE
+            // Close modal function - FIXED
             function closeModal() {
-            if (animationInProgress) {
-                // 1. Hide modal content first
-                shareModalContent.classList.remove('show');
-                
-                // 2. Start unblooming (container → 80px button di tengah)
-                setTimeout(() => {
-                    shareButton.classList.add('unblooming');
-                    shareButton.classList.remove('blooming');
+                if (animationInProgress) {
+                    // 1. Hide modal content first
+                    shareModalContent.classList.remove('show');
                     
-                    // Show icon back saat mulai unblooming - LEBIH AGGRESSIVE
-                    const allSvgs = shareButton.querySelectorAll('svg');
-                    allSvgs.forEach(svg => {
-                        svg.style.opacity = '1';
-                        svg.style.visibility = 'visible';
-                        svg.style.display = 'block';
-                    });
-                }, 200);
-                
-                // 3. After unbloom, move button back to original position
-                setTimeout(() => {
-                    shareButton.classList.remove('unblooming');
-                    shareButton.classList.add('moving');
-                    shareButton.classList.remove('centered');
+                    // 2. Start unblooming (container → button di tengah)
+                    setTimeout(() => {
+                        shareButton.classList.add('unblooming');
+                        shareButton.classList.remove('blooming');
+                        
+                        // Show icon back saat mulai unblooming
+                        const allSvgs = shareButton.querySelectorAll('svg');
+                        allSvgs.forEach(svg => {
+                            svg.style.opacity = '1';
+                            svg.style.visibility = 'visible';
+                            svg.style.display = 'block';
+                        });
+                    }, 200);
                     
-                    // Pastikan icon tetap keliatan saat moving back
-                    const allSvgs = shareButton.querySelectorAll('svg');
-                    allSvgs.forEach(svg => {
-                        svg.style.opacity = '1';
-                        svg.style.visibility = 'visible';
-                        svg.style.display = 'block';
-                    });
-                }, 800);
-                
-                // 4. Final cleanup
-                setTimeout(() => {
-                    shareButton.classList.remove('moving', 'animating');
-                    shareButton.style.top = '';
-                    shareButton.style.left = '';
-                    shareButton.style.right = '';
-                    modalBackdrop.classList.remove('show');
-                    document.body.style.overflow = '';
-                    animationInProgress = false;
+                    // 3. After unbloom, move button back to original position
+                    setTimeout(() => {
+                        shareButton.classList.remove('unblooming');
+                        shareButton.classList.add('moving');
+                        shareButton.classList.remove('centered');
+                        
+                        // Pastikan icon tetap keliatan saat moving back
+                        const allSvgs = shareButton.querySelectorAll('svg');
+                        allSvgs.forEach(svg => {
+                            svg.style.opacity = '1';
+                            svg.style.visibility = 'visible';
+                            svg.style.display = 'block';
+                        });
+                    }, 800);
                     
-                    // RESET SEMUA style ke default
-                    const allSvgs = shareButton.querySelectorAll('svg');
-                    allSvgs.forEach(svg => {
-                        svg.style.opacity = '';
-                        svg.style.visibility = '';
-                        svg.style.display = '';
-                    });
-                }, 1600);
+                    // 4. Final cleanup
+                    setTimeout(() => {
+                        shareButton.classList.remove('moving', 'animating');
+                        shareButton.style.top = '';
+                        shareButton.style.left = '';
+                        shareButton.style.right = '';
+                        modalBackdrop.classList.remove('show');
+                        document.body.style.overflow = '';
+                        animationInProgress = false;
+                        
+                        // Reset semua style ke default
+                        const allSvgs = shareButton.querySelectorAll('svg');
+                        allSvgs.forEach(svg => {
+                            svg.style.opacity = '';
+                            svg.style.visibility = '';
+                            svg.style.display = '';
+                        });
+                    }, 1600);
+                }
             }
-        }
 
             // Close button
             shareClose.addEventListener('click', closeModal);
