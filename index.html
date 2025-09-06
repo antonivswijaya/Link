@@ -535,6 +535,7 @@
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        .share-button.blooming svg,
         .share-button.centered {
             top: 50% !important;
             left: 50% !important;
@@ -1579,7 +1580,13 @@
 
                 // Start blooming
                 setTimeout(() => {
-                    shareButton.classList.add('blooming');
+                    // Manual hide semua SVG
+                    const allSvgs = shareButton.querySelectorAll('svg');
+                    allSvgs.forEach(svg => {
+                        svg.style.opacity = '0';
+                        svg.style.visibility = 'hidden';
+                        svg.style.display = 'none';
+                    });
                 }, 1050);
 
                 // Show modal content bersamaan dengan blooming (lebih cepat)
