@@ -606,22 +606,7 @@
                 opacity: 1;
             }
         }
-
-                .share-button.blooming svg {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .share-button.centered svg {
-            opacity: 0;
-        }
-
-        /* Show icon again during unbloom */
-        .share-button.unblooming svg {
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
+        
         /* Mobile responsive - sama untuk kedua animasi */
         @media (max-width: 480px) {
             @keyframes bloom {
@@ -1610,41 +1595,35 @@
 
            // Close modal function - FIX SEQUENCE
             function closeModal() {
-            if (animationInProgress) {
-                // 1. Hide modal content first
-                shareModalContent.classList.remove('show');
-                
-                // 2. Start unblooming (container → 80px button di tengah)
-                setTimeout(() => {
-                    shareButton.classList.add('unblooming');
-                    shareButton.classList.remove('blooming');
-                    // Show icon back saat mulai unblooming
-                    const icon = shareButton.querySelector('svg');
-                    if (icon) icon.style.opacity = '1';
-                }, 200);
-                
-                // 3. After unbloom, move button back to original position
-                setTimeout(() => {
-                    shareButton.classList.remove('unblooming');
-                    shareButton.classList.add('moving');
-                    shareButton.classList.remove('centered');
-                }, 800); // 200 + 600ms unbloom animation
-                
-                // 4. Final cleanup
-                setTimeout(() => {
-                    shareButton.classList.remove('moving', 'animating');
-                    shareButton.style.top = '';
-                    shareButton.style.left = '';
-                    shareButton.style.right = '';
-                    modalBackdrop.classList.remove('show');
-                    document.body.style.overflow = '';
-                    animationInProgress = false;
-                    // Reset icon opacity
-                    const icon = shareButton.querySelector('svg');
-                    if (icon) icon.style.opacity = '';
-                }, 1600); // 200 + 600 + 800ms total
+                if (animationInProgress) {
+                    // 1. Hide modal content first
+                    shareModalContent.classList.remove('show');
+                    
+                    // 2. Start unblooming (container → 80px button di tengah)
+                    setTimeout(() => {
+                        shareButton.classList.add('unblooming');
+                        shareButton.classList.remove('blooming');
+                    }, 200);
+                    
+                    // 3. After unbloom, move button back to original position
+                    setTimeout(() => {
+                        shareButton.classList.remove('unblooming');
+                        shareButton.classList.add('moving');
+                        shareButton.classList.remove('centered');
+                    }, 800); // 200 + 600ms unbloom animation
+                    
+                    // 4. Final cleanup
+                    setTimeout(() => {
+                        shareButton.classList.remove('moving', 'animating');
+                        shareButton.style.top = '';
+                        shareButton.style.left = '';
+                        shareButton.style.right = '';
+                        modalBackdrop.classList.remove('show');
+                        document.body.style.overflow = '';
+                        animationInProgress = false;
+                    }, 1600); // 200 + 600 + 800ms total
+                }
             }
-        }
 
             // Close button
             shareClose.addEventListener('click', closeModal);
