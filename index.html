@@ -553,7 +553,7 @@
         }
 
         .share-button.blooming {
-        animation: bloom 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        animation: bloom 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
         }
 
         @keyframes bloom {
@@ -563,6 +563,7 @@
                 border-radius: 50%;
                 opacity: 1;
             }
+            
             100% {
                 width: 400px;
                 height: 500px;
@@ -575,7 +576,7 @@
 
         /* Unblooming Animation - DISAMAKAN dengan blooming */
         .share-button.unblooming {
-            animation: unbloom 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            animation: unbloom 0.8s cubic-bezier(0.75, 0, 0.75, 0.9) forwards;
         }
 
         @keyframes unbloom {
@@ -599,6 +600,11 @@
         /* Mobile responsive - sama untuk kedua animasi */
         @media (max-width: 480px) {
             @keyframes bloom {
+                0% {
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                }
                 100% {
                     width: 90vw;
                     height: 80vh;
@@ -607,6 +613,11 @@
             }
             
             @keyframes unbloom {
+                0% {
+                    width: 90vw;
+                    height: 80vh;
+                    border-radius: 20px;
+                }
                 100% {
                     width: 44px;
                     height: 44px;
@@ -1576,7 +1587,7 @@
                             svg.style.visibility = 'visible';
                             svg.style.display = 'block';
                         });
-                    }, 200);
+                    }, 50);
                     
                     // 3. After unbloom, move button back to original position
                     setTimeout(() => {
@@ -1591,7 +1602,7 @@
                             svg.style.visibility = 'visible';
                             svg.style.display = 'block';
                         });
-                    }, 800);
+                    }, 1000);
                     
                     // 4. Final cleanup
                     setTimeout(() => {
@@ -1610,7 +1621,7 @@
                             svg.style.visibility = '';
                             svg.style.display = '';
                         });
-                    }, 1600);
+                    }, 2000);
                 }
             }
 
