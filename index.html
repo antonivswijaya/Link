@@ -535,7 +535,6 @@
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .share-button.blooming svg,
         .share-button.centered {
             top: 50% !important;
             left: 50% !important;
@@ -1579,16 +1578,17 @@
                 }, 850);
 
                 // Start blooming
+                // Jadi lebih cepat dan pastikan hide icon:
                 setTimeout(() => {
-                    // Manual hide semua SVG
+                    shareButton.classList.add('blooming');
+                    // Pastikan icon hilang immediately
                     const allSvgs = shareButton.querySelectorAll('svg');
                     allSvgs.forEach(svg => {
                         svg.style.opacity = '0';
                         svg.style.visibility = 'hidden';
                         svg.style.display = 'none';
                     });
-                }, 1050);
-
+                }, 1000); // Dipercepat dari 1050ms ke 850ms
                 // Show modal content bersamaan dengan blooming (lebih cepat)
                 setTimeout(() => {
                     shareModalContent.classList.add('show');
@@ -1598,35 +1598,59 @@
 
            // Close modal function - FIX SEQUENCE
             function closeModal() {
-                if (animationInProgress) {
-                    // 1. Hide modal content first
-                    shareModalContent.classList.remove('show');
+            if (animationInProgress) {
+                // 1. Hide modal content first
+                shareModalContent.classList.remove('show');
+                
+                // 2. Start unblooming (container → 80px button di tengah)
+                setTimeout(() => {
+                    shareButton.classList.add('unblooming');
+                    shareButton.classList.remove('blooming');
                     
-                    // 2. Start unblooming (container → 80px button di tengah)
-                    setTimeout(() => {
-                        shareButton.classList.add('unblooming');
-                        shareButton.classList.remove('blooming');
-                    }, 200);
+                    // Show icon back saat mulai unblooming - LEBIH AGGRESSIVE
+                    const allSvgs = shareButton.querySelectorAll('svg');
+                    allSvgs.forEach(svg => {
+                        svg.style.opacity = '1';
+                        svg.style.visibility = 'visible';
+                        svg.style.display = 'block';
+                    });
+                }, 200);
+                
+                // 3. After unbloom, move button back to original position
+                setTimeout(() => {
+                    shareButton.classList.remove('unblooming');
+                    shareButton.classList.add('moving');
+                    shareButton.classList.remove('centered');
                     
-                    // 3. After unbloom, move button back to original position
-                    setTimeout(() => {
-                        shareButton.classList.remove('unblooming');
-                        shareButton.classList.add('moving');
-                        shareButton.classList.remove('centered');
-                    }, 800); // 200 + 600ms unbloom animation
+                    // Pastikan icon tetap keliatan saat moving back
+                    const allSvgs = shareButton.querySelectorAll('svg');
+                    allSvgs.forEach(svg => {
+                        svg.style.opacity = '1';
+                        svg.style.visibility = 'visible';
+                        svg.style.display = 'block';
+                    });
+                }, 800);
+                
+                // 4. Final cleanup
+                setTimeout(() => {
+                    shareButton.classList.remove('moving', 'animating');
+                    shareButton.style.top = '';
+                    shareButton.style.left = '';
+                    shareButton.style.right = '';
+                    modalBackdrop.classList.remove('show');
+                    document.body.style.overflow = '';
+                    animationInProgress = false;
                     
-                    // 4. Final cleanup
-                    setTimeout(() => {
-                        shareButton.classList.remove('moving', 'animating');
-                        shareButton.style.top = '';
-                        shareButton.style.left = '';
-                        shareButton.style.right = '';
-                        modalBackdrop.classList.remove('show');
-                        document.body.style.overflow = '';
-                        animationInProgress = false;
-                    }, 1600); // 200 + 600 + 800ms total
-                }
+                    // RESET SEMUA style ke default
+                    const allSvgs = shareButton.querySelectorAll('svg');
+                    allSvgs.forEach(svg => {
+                        svg.style.opacity = '';
+                        svg.style.visibility = '';
+                        svg.style.display = '';
+                    });
+                }, 1600);
             }
+        }
 
             // Close button
             shareClose.addEventListener('click', closeModal);
